@@ -1,8 +1,8 @@
 const SHEET_ID = '1-kDCASxS6zj9NdTlhhy0-eZ-yVjnO5TgnapHYRP0rPw';
 const SHEET_NAME = 'ชีต1';
-const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}`;
+const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(Nited69)}`;
 // วาง Web App URL จาก Apps Script ที่ deploy แล้ว เพื่อให้บันทึกข้อมูลได้จริง
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby3s1imHwjG06J0nywvS_Pqyo6WD8o9AL7GWRr7G-nXvWCXaDfkFWmqLDsIlH3mPg3Trw/exec'; 
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0GWphYVH4Gm1F5z2_haVdZ2mQzZzqJ-Y1kC5qFZc7vGV-3EZ_URNH6RepvZLtqpDdXQ/exec'; 
 let records = [];
 let trendChart, subjectChart;
 const sampleData = [
