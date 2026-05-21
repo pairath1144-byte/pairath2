@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#053b8f" />
+  <title>ระบบนิเทศออนไลน์ โรงเรียนบ้านสากอ</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <div class="phone-shell">
+    <header class="hero">
+      <div class="hero-bg"></div>
+      <div class="topbar">
+        <img class="logo" src="assets/logo.jpeg" alt="โลโก้โรงเรียนบ้านสากอ" />
+        <div class="title-wrap">
+          <p>ยินดีต้อนรับเข้าสู่ระบบ</p>
+          <h1>ระบบนิเทศออนไลน์</h1>
+          <h2>โรงเรียนบ้านสากอ</h2>
+        </div>
+      </div>
+      <div class="people">
+        <img src="assets/director_blue.jpeg" alt="ผู้บริหาร" />
+        <img src="assets/supervisor_black.jpeg" alt="ผู้นิเทศ" />
+      </div>
+      <div class="date-card">
+        <span>วันนี้</span>
+        <strong id="todayText">-</strong>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-screen="dashboard">แดชบอร์ด</button>
+      <button class="tab" data-screen="form">บันทึกนิเทศ</button>
+      <button class="tab" data-screen="report">รายงาน</button>
+    </nav>
+
+    <main>
+      <section id="dashboard" class="screen active">
+        <div class="section-head">
+          <h3>ภาพรวมการนิเทศ</h3>
+          <button id="refreshBtn" class="ghost-btn">รีเฟรช</button>
+        </div>
+        <div class="stats-grid">
+          <article class="stat"><span>จำนวนครั้ง</span><strong id="totalCount">0</strong><small>ครั้ง</small></article>
+          <article class="stat"><span>คะแนนเฉลี่ย</span><strong id="avgScore">0.00</strong><small>/ 5</small></article>
+          <article class="stat"><span>ครูที่นิเทศ</span><strong id="teacherCount">0</strong><small>คน</small></article>
+          <article class="stat"><span>วิชามากสุด</span><strong id="topSubject">-</strong><small id="topSubjectCount">0 ครั้ง</small></article>
+        </div>
+
+        <article class="card">
+          <h4>แนวโน้มคะแนนเฉลี่ย</h4>
+          <canvas id="trendChart" height="210"></canvas>
+        </article>
+
+        <article class="card">
+          <h4>คะแนนเฉลี่ยรายวิชา</h4>
+          <canvas id="subjectChart" height="230"></canvas>
+        </article>
+
+        <article class="profile-card">
+          <img src="assets/director_blue.jpeg" alt="ผู้บริหาร" />
+          <div>
+            <h4>นายอภิวัฒน์ พรหมมา</h4>
+            <p>ผู้อำนวยการโรงเรียน</p>
+            <blockquote>“นิเทศด้วยใจ พัฒนาไปด้วยกัน”</blockquote>
+          </div>
+        </article>
+      </section>
+
+      <section id="form" class="screen">
+        <div class="section-head"><h3>บันทึกการนิเทศ</h3></div>
+        <form id="supervisionForm" class="card form-card">
+          <label>ชื่อผู้นิเทศ<input name="supervisor" required placeholder="เช่น ผอ. / หัวหน้าวิชาการ" /></label>
+          <label>ชื่อครูผู้รับการนิเทศ<input name="teacher" required placeholder="ชื่อ-สกุล" /></label>
+          <label>วิชา<input name="subject" required placeholder="เช่น คณิตศาสตร์" /></label>
+          <label>ชั้น<input name="grade" required placeholder="เช่น ป.1 / ม.2" /></label>
+          <label>วันที่นิเทศ<input name="date" type="date" required /></label>
+
+          <h4>แบบประเมินการนิเทศ</h4>
+          <div class="rating-grid">
+            <label>การจัดการเรียนรู้<select name="learning"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label>
+            <label>การใช้สื่อ<select name="media"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label>
+            <label>ผู้เรียนมีส่วนร่วม<select name="participation"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label>
+            <label>การวัดผล<select name="assessment"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label>
+          </div>
+          <label>ความคิดเห็น<textarea name="comment" rows="3" placeholder="จุดเด่นของการจัดการเรียนรู้"></textarea></label>
+          <label>ข้อเสนอแนะ<textarea name="suggestion" rows="3" placeholder="แนวทางพัฒนา / PLC ต่อไป"></textarea></label>
+          <button type="submit" class="primary-btn">บันทึกลงฐานข้อมูล</button>
+          <p id="formStatus" class="status"></p>
+        </form>
+      </section>
+
+      <section id="report" class="screen">
+        <div class="section-head">
+          <h3>รายงานผล</h3>
+          <button id="pdfBtn" class="ghost-btn">Export PDF</button>
+        </div>
+        <input id="searchInput" class="search" placeholder="ค้นหาชื่อครู / วิชา / ชั้น" />
+        <div id="reportList" class="report-list"></div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
